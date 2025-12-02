@@ -1,6 +1,6 @@
 // import { mockNewsData } from "./mock_data";
 import NewsCard from "./components/NewsCard.jsx";
-import FilterButtons from "./components/FilterButtons.jsx";
+import FilterButton from "./components/FilterButton.jsx";
 import { useState } from "react";
 import { useEffect } from "react";
 function App() {
@@ -63,10 +63,20 @@ function App() {
               전세계 다양한 소식을 보여줍니다
             </p>
           </div>
-          <FilterButtons
-            onChangeCallStatus={handleChangeCallStatus}
-            callStatus={callStatus}
-          />
+          <div className="flex flex-wrap items-center justify-center gap-3 sm:justify-start">
+            <FilterButton
+              active={callStatus === "top-headlines"}
+              onClick={() => handleChangeCallStatus("top-headlines")}
+            >
+              최신뉴스
+            </FilterButton>
+            <FilterButton
+              active={callStatus === "everything"}
+              onClick={() => handleChangeCallStatus("everything")}
+            >
+              뉴스검색
+            </FilterButton>
+          </div>
         </header>
 
         <main className="mt-12 flex-1">
