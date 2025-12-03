@@ -5,22 +5,14 @@ import { useState } from "react";
 import { useEffect } from "react";
 import SearchForm from "./components/SearchForm.jsx";
 import { useRef } from "react";
-// import { useCallback } from "react";
 
 function App() {
-  // const [isLoading, setIsLoading] = useState(false);
   const [news, setNews] = useState([]);
   const [callStatus, setCallStatus] = useState("top-headlines");
   const [query, setQuery] = useState("기술");
   const inputRef = useRef();
 
-  // const fetchNews = useCallback(async () => { }, [callStatus, query]);
-
   async function fetchNews() {
-    // setIsLoading(true);
-    // setNews([]);
-    console.log("callStatus:", callStatus);
-    // let api_url = "https://newsapi.org/v2/top-headlines";
     let api_url = `https://newsapi.org/v2/${callStatus}`;
     const key = import.meta.env.VITE_NEWS_API_KEY;
 
@@ -41,16 +33,6 @@ function App() {
       // setIsLoading(false);
     }
   }
-
-  /**
-   * useEffect
-   * 컴포넌트가 렌더링 될때마다 특정 작업을 수행
-   * 모든 컴포넌트가 렌더링 된 이후에 특정 작업을 수행하고 싶을 때 사용
-   * 의존성배열 : 빈배열 -> 컴포넌트가 처음 렌더링 될 때만 실행
-   * 의존성배열 : 특정 상태나 props -> 해당 값이 변경될 때마다 실행
-   */
-  // 문제 유발: fetchNews 함수에 의존하도록 변경
-  // fetchNews가 렌더마다 새로 생성되면 이 effect도 매 렌더 재실행됨
   useEffect(() => {
     fetchNews();
   }, [callStatus, query]);
@@ -63,22 +45,6 @@ function App() {
 
   function handleSearch(e) {
     e.preventDefault();
-    /**
-     * ## UseRef
-렌더링이 필요하지않은 값을 참조할때 사용한다.
-매개변수로 초기값을 받는다.
-Useref는 current 프로퍼티를 반환한다.
-
-## state와 Ref의 차이
-
-### state
-1. 값이 변경될때 마다 컴포넌트를 리빌드한다.
-2. 값을 UI에 바로 반영해야할때 사용해야 한다.
-
-### Ref
-1. 값이 변경되어도 컴포넌트를 리빌드 하지 않는다.
-2. DOM Element에 접근하기위해 사용되어진다.
-     */
     setQuery(inputRef.current.value);
   }
 
